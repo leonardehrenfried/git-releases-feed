@@ -2,11 +2,11 @@ GEM
   remote: http://rubygems.org/
   specs:
     hpricot (0.8.6)
-    redcarpet (2.1.0)
+    rdiscount (1.6.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   hpricot (~> 0.8.6)
-  redcarpet (~> 2.1.0)
+  rdiscount (~> 1.6.8)
