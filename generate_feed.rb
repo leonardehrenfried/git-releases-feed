@@ -29,7 +29,7 @@ feed = RSS::Maker.make(version) do |m|
   i = m.items.new_item
   i.title = "Git #{ver} release notes" 
   i.link = url
-  i.time = Time.now
+  i.date = Time.now
 end
 
 File.open(destination, "w") do |f|
