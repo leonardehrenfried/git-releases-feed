@@ -15,12 +15,8 @@ release_notes = open(url){ |f| f.read }
 markdown = RDiscount.new(release_notes)
 html_notes = markdown.to_html
 
-puts html_notes
 
-version = "2.0"
-destination = "feed.xml"
-
-feed = RSS::Maker.make(version) do |m|
+feed = RSS::Maker.make("2.0") do |m|
   m.channel.title = "Git Release Notes"
   m.channel.link = "http://lenni.info"
   m.channel.description = "Git Release notes."
@@ -29,9 +25,11 @@ feed = RSS::Maker.make(version) do |m|
   i = m.items.new_item
   i.title = "Git #{ver} release notes" 
   i.link = url
+  i.description = html_notes
   i.date = Time.now
 end
 
+destination = "feed.xml"
 File.open(destination, "w") do |f|
   f.write(feed)
 end
