@@ -34,32 +34,17 @@ def add_item(version)
   markdown = RDiscount.new(release_notes)
   html_notes = markdown.to_html
 
-  old_feed = get_feed
+  feed = get_feed
   
-  # unfortunately I don't seem to be able to add to a parsed feed
-  # so i need to copy new stuff to a new feed
-  content = RSS::Maker.make("2.0") do |m|
-    m.channel.title = old_feed.channel.title 
-    m.channel.link = old_feed.channel.link 
-    m.channel.description = old_feed.channel.link
-    m.items.do_sort = true # sort items by date
-
-    old_feed.channel.items.each do |old_item|
-      i = m.items.new_item
-      i.title = old_item.title 
-      i.link = old_item.link 
-      i.date = old_item.date
-      i.description = old_item.description
-    end
-    
-    i = m.items.new_item
-    i.title = "Git v#{version} Release Notes" 
-    i.link = get_url version 
-    i.date = Time.now()
-    i.description = html_notes
-  end
-
-  write_to_file content 
+  item = RSS::Rss::Channel::Item.new
+  item.title = "Git v#{version} Release Notes" 
+  item.link = get_url version 
+  item.date = Time.now()
+  item.description = html_notes
+  item.guid = RSS::Rss::Channel::Item::Guid.new
+  
+  feed.channel.items.push item
+  write_to_file feed 
 end
 
 def init_feed()
