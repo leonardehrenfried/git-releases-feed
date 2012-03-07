@@ -68,6 +68,8 @@ def write_to_file(feed)
   File.open(FILENAME, 'w') {|f| f.write(feed) }
 end
 
+puts "Script started at #{Time.now}"
+
 # actual workflow
 if !File.exist?(FILENAME):
   puts "*** Feed doesn't exist yet, initialising ***"
