@@ -10,7 +10,16 @@ require 'rdiscount'
 FILENAME = "rss.xml"
 
 def is_new(version)
-  puts value 
+  url = get_url version
+  file = File.open(FILENAME, 'r') 
+  rss = RSS::Parser.parse(file, false)
+  rss.items.each do |i|
+    is_new = i.link == url
+    if is_new:
+      return false
+    end
+  end
+  return true
 end
 
 def get_url(version)
@@ -21,7 +30,7 @@ def add_new(version)
   release_notes = open(get_url version){ |f| f.read }
   markdown = RDiscount.new(release_notes)
   html_notes = markdown.to_html
-  
+
   feed = RSS::Maker.make("2.0") do |m|
     m.channel.title = "Git Release Notes"
     m.channel.link = "http://git-com.com"
@@ -39,14 +48,17 @@ def add_new(version)
 end
 
 def write_to_file(feed)
-  File.open(FILENAME, "w") do |f|
-    f.write(feed)
-  end
+  File.open(FILENAME, 'w') {|f| f.write(feed) }
 end
 
 doc = Hpricot(open("http://git-scm.com/"))
 ver = doc.at("div#ver").inner_text
 ver = ver[1..-1] #remove leading 'v'
-add_new ver
 
+if is_new ver:
+  puts "*** New version #{ver} found, adding to feed ***"
+  add_new ver
+else
+  puts "*** Version #{ver} already in feed, exitting ***"
+end
 
