@@ -17,8 +17,7 @@ end
 def is_new(version)
   url = get_url version
   get_feed.items.each do |i|
-    is_new = i.link == url
-    if is_new:
+    if i.link == url
       return false
     end
   end
@@ -71,7 +70,7 @@ end
 puts "Script started at #{Time.now}"
 
 # actual workflow
-if !File.exist?(FILENAME):
+if !File.exist?(FILENAME)
   puts "*** Feed doesn't exist yet, initialising ***"
   init_feed
 else
@@ -79,7 +78,7 @@ else
   ver = doc.at("div#ver").inner_text
   ver = ver[1..-1] #remove leading 'v'
 
-  if is_new ver:
+  if is_new ver
     puts "*** New version #{ver} found, adding to feed ***"
     add_item ver
   else
