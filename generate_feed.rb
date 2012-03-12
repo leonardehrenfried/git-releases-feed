@@ -6,7 +6,11 @@ require 'open-uri'
 require 'rss/maker'
 require 'rdiscount'
 
-FILENAME = "rss.xml"
+if ARGV[0]
+  FILENAME = ARGV[0]
+else
+  raise "Please pass in the filename like this: ./generate_feed.rb /home/user/rss.xml"
+end 
 
 def get_feed
   file = File.open(FILENAME, 'r') 
