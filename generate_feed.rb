@@ -63,7 +63,7 @@ def init_feed()
   ["1.7.8", "1.7.8.1", "1.7.8.2", "1.7.8.3", "1.7.8.4", "1.7.8.5", "1.7.9", 
     "1.7.9.1", "1.7.9.2", "1.7.9.3"].each do |ver|
     puts "*** Adding version #{ver} to initial feed"
-    add_item ver      
+    add_item ver
     end
 end
 
@@ -79,8 +79,7 @@ if !File.exist?(FILENAME)
   init_feed
 else
   doc = Hpricot(open("http://git-scm.com/"))
-  ver = doc.at("div#ver").inner_text
-  ver = ver[1..-1] #remove leading 'v'
+  ver = doc.at("span.version").inner_text
 
   if is_new ver
     puts "*** New version #{ver} found, adding to feed ***"
