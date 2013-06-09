@@ -10,10 +10,10 @@ if ARGV[0]
   FILENAME = ARGV[0]
 else
   raise "Please pass in the filename like this: ./generate_feed.rb /home/user/rss.xml"
-end 
+end
 
 def get_feed
-  file = File.open(FILENAME, 'r') 
+  file = File.open(FILENAME, 'r')
   RSS::Parser.parse(file, false)
 end
 
@@ -38,16 +38,16 @@ def add_item(version)
   html_notes = markdown.to_html
 
   feed = get_feed
-  
+
   item = RSS::Rss::Channel::Item.new
-  item.title = "Git v#{version} Release Notes" 
-  item.link = get_url version 
+  item.title = "Git v#{version} Release Notes"
+  item.link = get_url version
   item.date = Time.now()
   item.description = html_notes
   item.guid = RSS::Rss::Channel::Item::Guid.new
-  
+
   feed.channel.items.unshift item
-  write_to_file feed 
+  write_to_file feed
 end
 
 def init_feed()
@@ -60,7 +60,7 @@ def init_feed()
   write_to_file feed
 
   # prepopulate
-  ["1.7.8", "1.7.8.1", "1.7.8.2", "1.7.8.3", "1.7.8.4", "1.7.8.5", "1.7.9", 
+  ["1.7.8", "1.7.8.1", "1.7.8.2", "1.7.8.3", "1.7.8.4", "1.7.8.5", "1.7.9",
     "1.7.9.1", "1.7.9.2", "1.7.9.3"].each do |ver|
     puts "*** Adding version #{ver} to initial feed"
     add_item ver
