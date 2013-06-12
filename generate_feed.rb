@@ -46,7 +46,8 @@ def add_item(version)
   item.description = html_notes
   item.guid = RSS::Rss::Channel::Item::Guid.new
 
-  feed.channel.items.slice!(0..15)
+  items = feed.channel.items
+  items.slice!(15..items.size)
   feed.channel.items.unshift item
   write_to_file feed
 end
