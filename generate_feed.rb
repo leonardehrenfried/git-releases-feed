@@ -81,7 +81,7 @@ if !File.exist?(FILENAME)
   init_feed
 else
   doc = Hpricot(open("http://git-scm.com/"))
-  ver = doc.at("span.version").inner_text
+  ver = doc.at("span.version").inner_text.strip
 
   if is_new ver
     puts "*** New version #{ver} found, adding to feed ***"
