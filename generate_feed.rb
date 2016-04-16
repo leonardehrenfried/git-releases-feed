@@ -80,7 +80,7 @@ if !File.exist?(FILENAME)
   puts "*** Feed doesn't exist yet, initialising ***"
   init_feed
 else
-  doc = Hpricot(open("http://git-scm.com/"))
+  doc = Hpricot(open("https://git-scm.com/"))
   ver = doc.at("span.version").inner_text.strip
 
   if is_new ver
