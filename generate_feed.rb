@@ -55,7 +55,7 @@ end
 def init_feed()
   feed = RSS::Maker.make("2.0") do |m|
     m.channel.title = "Git Release Notes"
-    m.channel.link = "http://git-scm.com"
+    m.channel.link = "https://git-scm.com"
     m.channel.description = "Git Release notes."
     m.items.do_sort = true
   end
