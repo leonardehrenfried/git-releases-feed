@@ -1,7 +1,7 @@
 BASENAME = File.basename(Dir.getwd)
 
 USER = "lenni"
-HOST = "lenni.info"
+HOST = "leonard.io"
 PATH = "webapps/#{BASENAME}"
 
 task :default => ["deploy"]
